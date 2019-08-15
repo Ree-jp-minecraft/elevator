@@ -30,6 +30,8 @@ Available world//使用可能なワールド[string]
 
 15ブロックまでテレポート可能です
 
+https://user-images.githubusercontent.com/49682119/63075344-567e4600-bf6c-11e9-9a71-822f86ceab87.png
+
 # Download
 
 [here](https://github.com/Ree-jp/elevator/releases/download/1.0.0/Elevator_v1.0.0.phar)
