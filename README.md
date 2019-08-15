@@ -2,6 +2,7 @@ Elevator
 ====
 
 #Japanese
+====
 
 ##コンフィグ
 
