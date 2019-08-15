@@ -1,6 +1,3 @@
-Elevator
-====
-
 #Japanese
 
 ##コンフィグ
