@@ -1,9 +1,9 @@
 Elevator
 ====
 
-#Japanese
+# Japanese
 
-##コンフィグ
+## コンフィグ
 
 Authority required for use//使用に必要な権限[op or true]
 
@@ -20,7 +20,7 @@ Available world//使用可能なワールド[string]
 デフォルトではworldとlobbyになっています
 
 
-##使い方
+## 使い方
 
 鉄ブロックの上に鉄の感圧版を置いたものを高さをずらして2つ以上設置します
 
