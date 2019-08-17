@@ -7,7 +7,8 @@ Convenient travel by elevator
 
 ## コンフィグ
 
-Authority required for use//使用に必要な権限[op or true]
+"Authority required for use//使用に必要な権限[op or true]"
+
 
 エレベーターの使用に必要な権限を記載します
 
@@ -15,7 +16,8 @@ opかtrue(全員)に変更可能です
 
 デフォルトではopだけになっています
 
-Available world//使用可能なワールド[string]
+"Available world//使用可能なワールド[string]"
+
 
 エレベーターを使えるワールドを記載します
 
@@ -36,7 +38,8 @@ Available world//使用可能なワールド[string]
 
 ## config
 
-Authority required for use//使用に必要な権限[op or true]
+"Authority required for use//使用に必要な権限[op or true]"
+
 
 List the authority required to use the elevator
 
@@ -44,7 +47,8 @@ Can be changed to op or true (everyone)
 
 The default is only op
 
-Available world//使用可能なワールド[string]
+"Available world//使用可能なワールド[string]"
+
 
 List the worlds where you can use the elevator
 
