@@ -34,7 +34,29 @@ Available world//使用可能なワールド[string]
 
 # English
 
-comming soon...
+## config
+
+Authority required for use//使用に必要な権限[op or true]
+
+List the authority required to use the elevator
+
+Can be changed to op or true (everyone)
+
+The default is only op
+
+Available world//使用可能なワールド[string]
+
+List the worlds where you can use the elevator
+
+Default is world and lobby
+
+## How to use
+
+Install two or more iron pressure-sensitive plates placed on an iron block at different heights.
+
+If you jump on it, it will teleport up, if you sneak it will teleport down
+
+Teleport up to 15 blocks
 
 # Download
 
