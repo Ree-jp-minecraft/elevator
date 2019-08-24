@@ -18,7 +18,7 @@ class main extends PluginBase implements Listener
     
     public function onEnable ()
     {
-        echo "Elevator>>loading now...\n";
+       $this->getLogger()->info(">>loading now...");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->elevator = new Config($this->getDataFolder() . "elevator.yml" ,Config::YAML ,array(
             'Authority required for use//使用に必要な権限[op or true]' => 'op',
