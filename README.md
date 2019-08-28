@@ -21,6 +21,11 @@ opかtrue(全員)に変更可能です
 
 デフォルトではworldとlobbyになっています
 
+"message//メッセージ[true or false]"
+
+エレベーターを使った際メッセージを表示するか選べるようになります
+
+デフォルトではtrueになっています
 
 ## 使い方
 
@@ -49,6 +54,12 @@ The default is only op
 List the worlds where you can use the elevator
 
 Default is world and lobby
+
+"message//メッセージ[true or false]"
+
+You can now choose whether to display a message when using the elevator
+
+Default is true
 
 ## How to use
 
