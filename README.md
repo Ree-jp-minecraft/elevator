@@ -21,11 +21,11 @@ opかtrue(全員)に変更可能です
 
 デフォルトではworldとlobbyになっています
 
-"message//メッセージ[true or false]"
+"message//メッセージ(up)　message//メッセージ(down)"
 
-エレベーターを使った際メッセージを表示するか選べるようになります
+エレベーターを使った際のメッセージを変更できます
 
-デフォルトではtrueになっています
+{name}でプレイヤーの名前に、{block}で移動したブロック数に置き換えれます
 
 ## 使い方
 
@@ -55,11 +55,11 @@ List the worlds where you can use the elevator
 
 Default is world and lobby
 
-"message//メッセージ[true or false]"
+"message//メッセージ(up)　message//メッセージ(down)"
 
-You can now choose whether to display a message when using the elevator
+You can change the message when you use the elevator
 
-Default is true
+{name} will be replaced with the player's name and {block} will be replaced with the number of blocks moved
 
 ## How to use
 
