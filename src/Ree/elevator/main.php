@@ -9,6 +9,7 @@ use pocketmine\utils\Config;
 use pocketmine\math\Vector3;
 
 use pocketmine\event\player\PlayerJumpEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerToggleSneakEvent;
 
 class main extends PluginBase implements Listener
@@ -39,6 +40,52 @@ class main extends PluginBase implements Listener
         $this->message = $this->elevator->get("showMessage");
     }
 
+	//Am i in an elevator ?
+	public function onMove(PlayerMoveEvent $ev) {
+		if (!$ev->getFrom()->equals($ev->getTo())) {
+			//player has moved.
+
+			$p = $ev->getPlayer();
+			$n = $p->getName();
+			$level = $p->getlevel();
+			$x = $p->getX();
+			$y = $p->getY();
+			$z = $p->getZ();
+			$s = 0;
+					
+			//Can i use it ? I'm in an enabled world ?
+			if ($this->enabled($p)) {
+				//Am i in an elevator ?
+				if ($this->elevator($level, $x, $y, $z)) {
+					//Try to check up
+					for ($i = 2; $i <= self::$distanceMaximum; $i++) {
+						if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y + $i, $z))->getId()) {
+							if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y + $i - 1, $z))->getId()) {
+								$s = $s+1;
+								break;
+							}
+						}
+					}
+					//Try to check down
+					for ($i = 2; $i <= self::$distanceMaximum; $i++) {
+						if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y - $i, $z))->getId()) {
+							if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y - $i - 1, $z))->getId()) {
+								$s = $s+2;
+								break;
+							}
+						}
+					}
+					if ($s == 1)
+						$p->sendPopup("§aElevator: §6UP");						
+					else if ($s == 2)
+						$p->sendPopup("§aElevator: §6DOWN");		
+					else if ($s == 3)
+						$p->sendPopup("§aElevator: §6UP & DOWN");		
+				}
+			}
+		}
+	}
+
     private function elevator($level, $x, $y, $z)
     {
         $vector3 = new Vector3($x, $y, $z);
@@ -60,32 +107,17 @@ class main extends PluginBase implements Listener
         $x = $p->getX();
         $y = $p->getY();
         $z = $p->getZ();
-		$enable = false;
-
-		//Am i ahthorized to use plugin ?
-        if($this->request($p)) {
-			//Enabled in all level ?
-			if ($this->world[0] == '*')
-				$enable = true;
-			else {
-				//Check if we are in an enabled level
-				foreach ($this->world as $world) {
-					$world = $this->getServer()->getLevelByName($world);
-					if ($level == $world ) $enable = true;
-				}
-			}
                 
-            if ($enable) {
-                if ($this->elevator($level, $x, $y, $z)) {
-                    for ($i = 2; $i <= self::$distanceMaximum; $i++) {
-                        if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y + $i, $z))->getId()) {
-                            if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y + $i - 1, $z))->getId()) {
-                                $p->teleport(new Vector3($x, $y + $i, $z));
-                                if ($this->message == "true") {
-                                    $p->sendMessage("You go up for " . $i . " blocks");
-                                }
-                                break;
+        if ($this->enabled($p)) {
+            if ($this->elevator($level, $x, $y, $z)) {
+                for ($i = 2; $i <= self::$distanceMaximum; $i++) {
+                    if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y + $i, $z))->getId()) {
+                        if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y + $i - 1, $z))->getId()) {
+                            $p->teleport(new Vector3($x, $y + $i, $z));
+                            if ($this->message == "true") {
+                                $p->sendMessage("You go up for " . $i . " blocks");
                             }
+                            break;
                         }
                     }
                 }
@@ -101,44 +133,29 @@ class main extends PluginBase implements Listener
         $x = $p->getX();
         $y = $p->getY();
         $z = $p->getZ();
-		$enable = false;
 
         if(empty($this->sneak[$n]))
         {
             $this->sneak[$n] = true;
         }
 
-        if ($ev->isSneaking()) {
-			//Am i ahthorized to use plugin ?
-			if($this->request($p)) {
-				//Enabled in all level ?
-				if ($this->world[0] == '*')
-					$enable = true;
-				else {
-					//Check if we are in an enabled level
-					foreach ($this->world as $world) {
-						$world = $this->getServer()->getLevelByName($world);
-						if ($level == $world ) $enable = true;
-					}
-				}
-					
-				if ($enable) {
-					if ($this->sneak[$n]) {
-								if ($this->elevator($level, $x, $y, $z)) {
-									for ($i = 2; $i <= self::$distanceMaximum; $i++) {
-										if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y - $i, $z))->getId()) {
-											if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y - $i - 1, $z))->getId()) {
-												$p->teleport(new Vector3($x, $y - $i, $z));
-												if ($this->message == "true") {
-													$p->sendMessage("You go down for " . $i . " blocks");
-												}
-												$this->sneak[$n] = false;
-												break;
+        if ($ev->isSneaking()) {					
+			if ($this->enabled($p)) {
+				if ($this->sneak[$n]) {
+							if ($this->elevator($level, $x, $y, $z)) {
+								for ($i = 2; $i <= self::$distanceMaximum; $i++) {
+									if (self::$elevatorPlate == $level->getBlock(new Vector3($x, $y - $i, $z))->getId()) {
+										if (self::$elevatorBlock == $level->getBlock(new Vector3($x, $y - $i - 1, $z))->getId()) {
+											$p->teleport(new Vector3($x, $y - $i, $z));
+											if ($this->message == "true") {
+												$p->sendMessage("You go down for " . $i . " blocks");
 											}
+											$this->sneak[$n] = false;
+											break;
 										}
 									}
 								}
-					}
+							}
 				}
 			}
         } else {
@@ -159,5 +176,24 @@ class main extends PluginBase implements Listener
                 return false;
             }
         }
+    }
+	
+    private function enabled ($p)
+    {
+        if($this->request($p)) {
+			//Enabled in all level ?
+			if ($this->world[0] == "*") {
+				return true;
+			}
+			else {
+				//Check if we are in an enabled level
+				foreach ($this->world as $world) {
+					$world = $this->getServer()->getLevelByName($world);
+					if ($level == $world ) return true;
+				}
+				return false;
+			}
+		}
+		else return false;
     }
 }
