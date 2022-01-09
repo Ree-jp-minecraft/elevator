@@ -40,8 +40,8 @@ class main extends PluginBase implements Listener
             'message//メッセージ[true or false]' => 'true'
         ));
         $this->authority = $elevator->get("Authority required for use//使用に必要な権限[op or true]");
-        $this->world = $elevator->get("Available world//使用可能なワールド[string]");
-        $this->world = explode(",", $this->world);
+        $stringWorld = $elevator->get("Available world//使用可能なワールド[string]");
+        $this->world = explode(",", $stringWorld);
         $this->message = $elevator->get("message//メッセージ[true or false]");
     }
 
